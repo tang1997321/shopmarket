@@ -1,9 +1,8 @@
 package com.cy.shopmarket.background.goodsmanager.service;
 
-import java.util.List;
-
-import com.cy.shopmarket.common.pojo.GoodsCar;
 import com.cy.shopmarket.background.goodsmanager.vo.GoodsCarVo;
+import com.cy.shopmarket.common.pojo.GoodsCar;
+import com.cy.shopmarket.common.vo.PageObject;
 
 public interface GoodsGoodsCarService {
 	
@@ -13,6 +12,6 @@ public interface GoodsGoodsCarService {
 	
 	int deleteCarById(Integer id);
 	
-	List<GoodsCarVo> findCarObjects();
+	PageObject<GoodsCarVo> findPageObjects(String username, Integer pageCurrent);
 	
 }

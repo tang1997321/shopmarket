@@ -19,8 +19,8 @@ import com.cy.shopmarket.common.util.IPUtils;
 /**
  * 	扩展切面动态添加日志
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LogLogAspect {
 	
 	@Pointcut("@annotation(com.cy.shopmarket.common.annotation.AddLoggingAnnotation)")
@@ -54,6 +54,8 @@ public class LogLogAspect {
 				targetMethod.getAnnotation(AddLoggingAnnotation.class);
 		//获取操作名
 		String operation = logAnn.operation();
+		//获取操作id
+		int operationId = logAnn.operationId();
 		
 		//获取方法名
 		String logType = targetClass.getName();
@@ -72,7 +74,7 @@ public class LogLogAspect {
 		log.setTime(time);
 		log.setIp(IPUtils.getIpAddr());
 		log.setCreatetime(new Date());
-		log.setOperationId(1);
+		log.setOperationId(operationId);
 		logLogService.insertLogAddObject(log);
 	}
 }

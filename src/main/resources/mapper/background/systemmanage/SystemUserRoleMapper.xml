@@ -33,4 +33,10 @@
             </choose>
         </where>
     </delete>
+    <select id="findRoleIdsByUserIds"
+            resultType="int">
+        select role_id
+        from user_role
+        where user_id=#{id}
+   </select>
 </mapper>

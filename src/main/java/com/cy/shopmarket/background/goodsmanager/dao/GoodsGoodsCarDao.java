@@ -11,11 +11,11 @@ import com.cy.shopmarket.background.goodsmanager.vo.GoodsCarVo;
 @Mapper
 public interface GoodsGoodsCarDao {
 	
-	int updateCarObject(@Param("goodsCar")GoodsCar goodsCar);
+	int updateCarObject(@Param("goodsCar") GoodsCar goodsCar);
 
-	int insertCarObject(@Param("goodsCar")GoodsCar goodsCar);
+	int insertCarObject(@Param("goodsCar") GoodsCar goodsCar);
 	
-	int deleteCarByGoodId(@Param("id")Integer id);
+	int deleteCarByGoodId(@Param("id") Integer id);
 	
-	List<GoodsCarVo> findCarObjects();
+	List<GoodsCarVo> findCarObjects(@Param("username") String username);
 }

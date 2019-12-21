@@ -13,7 +13,7 @@ import com.cy.shopmarket.common.pojo.Log;
 @SpringBootTest
 public class LogLogDaoTest {
 
-	@Autowired
+	@Autowired(required = false)
 	private LogLogDao logLogDao;
 	
 	@Test

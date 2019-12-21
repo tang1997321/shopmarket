@@ -19,15 +19,13 @@
         from user u join user_role join role r
         on u.id = user_id and user_role.role_id = r.id
         <where>
-            <choose>
-                <when test="username!=null">
-                    username=#{username}
-                </when>
-            </choose>
+            <if test="username!=null and username!=''">
+                username like concat("%",#{username},"%")
+            </if>
         </where>
     </select>
 
-    <delete id="doDeleteById">
+    <delete id="doDeleteObjectById">
         delete from user
         <where>
             <choose>
@@ -40,26 +38,11 @@
             </choose>
         </where>
     </delete>
-    <insert id="doSaveObject">
-        insert into user (username, password, phone, salt, addr, money, jpg) values (#{username}, #{password}, #{phone}, #{salt}, #{addr}, #{money}, #{jpg})
+    <insert id="doSaveObject" useGeneratedKeys="true" keyProperty="id">
+        insert into user (username, password, phone, salt, addr, money, jpg) values (#{entity.username}, #{entity.password}, #{entity.phone}, #{entity.salt}, #{entity.addr}, #{entity.money}, #{entity.jpg})
     </insert>
-    <select id="doFindById" resultMap="userRoleVo">
-        select r.name,u.username,u.phone,u.addr,u.money,u.jpg
-        from user u join user_role join role r
-        on u.id = user_id and user_role.role_id = r.id
-        <where>
-            <choose>
-                <when test="id!=null">
-                    u.id=#{id}
-                </when>
-                <otherwise>
-                    u.id=-1
-                </otherwise>
-            </choose>
-        </where>
-    </select>
-    <update id="doUpdateById">
-        update user set username=#{username},phone=#{phone},addr=#{addr},money=#{money},jpg=#{jpg}
+    <select id="doFindById" resultType="com.cy.shopmarket.common.pojo.User">
+        select * from user
         <where>
             <choose>
                 <when test="id!=null">
@@ -70,6 +53,27 @@
                 </otherwise>
             </choose>
         </where>
+    </select>
+    <update id="doUpdateById">
+        update user set
+        username=#{entity.username},phone=#{entity.phone},addr=#{entity.addr},money=#{entity.money},jpg=#{entity.jpg}
+        <where>
+            <choose>
+                <when test="entity.id!=null and entity.id!=''">
+                    id=#{entity.id}
+                </when>
+                <otherwise>
+                    id=-1
+                </otherwise>
+            </choose>
+        </where>
     </update>
-
+    <select id="getRowCount" resultType="int">
+        select count(*) from user
+        <where>
+            <if test="username!=null and username!=''">
+                username like concat("%",#{username},"%")
+            </if>
+        </where>
+    </select>
 </mapper>

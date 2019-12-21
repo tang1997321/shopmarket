@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cy.shopmarket.common.pojo.GoodsType;
 import com.cy.shopmarket.background.goodsmanager.service.GoodsGoodsTypeService;
-import com.cy.shopmarket.background.goodsmanager.vo.JsonResult;
+import com.cy.shopmarket.common.vo.JsonResult;
 
 @RestController
-@RequestMapping("/admin/")
+@RequestMapping("goods/type/")
 public class GoodsGoodsTypeController {
 
 	@Autowired
@@ -31,8 +31,8 @@ public class GoodsGoodsTypeController {
 		return new JsonResult("删除成功");
 	}
 	//查
-	@RequestMapping("doTypeList")
-	public JsonResult findTypeObjects() {
-		return new JsonResult(goodsGoodsTypeService.findTypeObjects());
+	@RequestMapping("doFindPageObjects")
+	public JsonResult findTypeObjects(String username, Integer pageCurrent) {
+		return new JsonResult(goodsGoodsTypeService.findTypeObjects(username,pageCurrent));
 	}
 }

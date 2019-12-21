@@ -5,6 +5,7 @@ import com.cy.shopmarket.common.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,11 +15,14 @@ import java.util.List;
 public interface SystemUserDao {
 	//根据用户名查询用户
 	List<SystemUserRoleVo> doFindObjects(String username);
+
 	int doDeleteObjectById(Integer id);
-	
+
 	int doSaveObject(@Param("entity") User entity);
-	
-	List<SystemUserRoleVo> doFindById(Integer id);
-	
-	int doUpdateById(@Param("entity") SystemUserRoleVo entity);
+
+	User doFindById(Integer id);
+
+	int doUpdateById(@Param("entity") User entity);
+
+	int getRowCount(String username);
 }

@@ -14,12 +14,12 @@ import com.cy.shopmarket.common.pojo.GoodsType;
 @Mapper
 public interface GoodsGoodsTypeDao {
 	
-	int updateTypeOjbect(@Param("goodsType")GoodsType goodsType);
+	int updateTypeOjbect(@Param("goodsType") GoodsType goodsType);
 	
-	int insertTypeObject(@Param("goodsType")GoodsType goodsType);
+	int insertTypeObject(@Param("goodsType") GoodsType goodsType);
 	
-	int deleteTypeById(@Param("id")Integer id);
+	int deleteTypeById(@Param("id") Integer id);
 	
 	@Select("select * from goods_type")
-	List<GoodsType> findTypeObjects();
+	List<GoodsType> findTypeObjects(@Param("username") String username);
 }

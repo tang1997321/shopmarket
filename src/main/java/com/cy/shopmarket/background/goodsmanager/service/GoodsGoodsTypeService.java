@@ -1,8 +1,7 @@
 package com.cy.shopmarket.background.goodsmanager.service;
 
-import java.util.List;
-
 import com.cy.shopmarket.common.pojo.GoodsType;
+import com.cy.shopmarket.common.vo.PageObject;
 
 
 public interface GoodsGoodsTypeService {
@@ -13,5 +12,5 @@ public interface GoodsGoodsTypeService {
 
 	int deleteTypeById(Integer id);
 	
-	List<GoodsType> findTypeObjects();
+	PageObject<GoodsType> findTypeObjects(String username, Integer pageCurrent);
 }

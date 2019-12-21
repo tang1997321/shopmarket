@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cy.shopmarket.common.pojo.GoodsInfo;
 import com.cy.shopmarket.background.goodsmanager.service.GoodsGoodsInfoService;
-import com.cy.shopmarket.background.goodsmanager.vo.JsonResult;
+import com.cy.shopmarket.common.vo.JsonResult;
 
 @RestController
-@RequestMapping("/admin/")
+@RequestMapping("goods/info/")
 public class GoodsGoodsInfoController {
 
 	@Autowired
@@ -37,8 +37,8 @@ public class GoodsGoodsInfoController {
 	}
 	
 	//查
-	@RequestMapping("doGoodsList")
-	public JsonResult findGoodsObjects() {
-		return new JsonResult(goodsGoodsInfoService.findGoodsObjects());
+	@RequestMapping("doFindObjects")
+	public JsonResult findGoodsObjects(String username, Integer pageCurrent) {
+		return new JsonResult(goodsGoodsInfoService.findGoodsObjects(username,pageCurrent));
 	}
 }

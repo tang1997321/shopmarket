@@ -2,19 +2,20 @@ package com.cy.shopmarket.background.systemmanager.service;
 
 import com.cy.shopmarket.background.systemmanager.vo.SystemUserRoleVo;
 import com.cy.shopmarket.common.pojo.User;
+import com.cy.shopmarket.common.vo.PageObject;
 
-import java.util.List;
+import java.util.Map;
 
 public interface SystemUserService {
 	/**
 	 * 查询所有用户
 	 * @return
 	 */
-	List<SystemUserRoleVo> doFindObjects(String username);
+	PageObject<SystemUserRoleVo> doFindObjects(String username, Integer pageCurrent);
 	/**
 	 * 删除用户
 	 */
-	int doDeleteObjects(Integer id);
+	int doDeleteObject(Integer id);
 	
 	/**
 	 * 增添用户
@@ -30,12 +31,12 @@ public interface SystemUserService {
 	 * @param roleIds
 	 * @return
 	 */
-	int doUpdateById(SystemUserRoleVo entity, Integer[] roleIds);
+	int doUpdateById(User entity, Integer[] roleIds);
 	
 	/**
 	 * 根据id查询用户信息
 	 * @param id
 	 * @return
 	 */
-	List<SystemUserRoleVo> doFindById(Integer id);
+	Map<String, Object> doFindById(Integer id);
 }

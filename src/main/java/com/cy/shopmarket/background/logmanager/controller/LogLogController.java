@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cy.shopmarket.background.goodsmanager.vo.JsonResult;
+import com.cy.shopmarket.common.vo.JsonResult;
 import com.cy.shopmarket.background.logmanager.service.LogLogService;
 
 

@@ -40,5 +40,15 @@
 			</choose>
 		</where>
 	</delete>
-	
+	<select id="findGoodsObjects" resultType="com.cy.shopmarket.background.goodsmanager.vo.GoodsInfoVo">
+		select g.id, g.name, g.type_id, g.jpg, g.price, g.is_hot, u.username, g.createdtime, g.is_exist
+		from goods_info g join user u
+		on g.user_id=u.id
+		where is_exist=1
+		<choose>
+			<when test="name!=null and name !=''">
+					and g.name =#{name}
+			</when>
+		</choose>
+	</select>
 </mapper>

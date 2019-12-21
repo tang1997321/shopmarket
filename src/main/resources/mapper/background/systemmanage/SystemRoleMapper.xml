@@ -6,9 +6,15 @@
 <mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemRoleDao">
     <select id="doFindObjectById" resultType="com.cy.shopmarket.common.pojo.Role">
         select * from role
+       where id=#{id}
+    </select>
+    <select id="doFindObjects" resultType="com.cy.shopmarket.common.pojo.Role">
+        select * from role
         <where>
-            id=#{id}
-        </where>
+                <if test="name!=null and name!=''">
+                    name like concat("%",#{name},"%")
+                </if>
+            </where>
     </select>
     <delete id="doDeleteById">
         delete from role
@@ -24,11 +30,11 @@
         </where>
     </delete>
     <update id="doUpdateById">
-        update role set name=#{name},note=#{note}
+        update role set name=#{entity.name},note=#{entity.note}
         <where>
             <choose>
-                <when test="id!=null">
-                    id=#{id}
+                <when test="entity.id!=null">
+                    id=#{entity.id}
                 </when>
                 <otherwise>
                     id = -1
@@ -36,7 +42,16 @@
             </choose>
         </where>
     </update>
+    <select id="doGetRowCounts" resultType="int">
+        select count(*)
+        from role
+        <where>
+            <if test="name!=null and name!=''">
+                name like concat("%",#{name},"%")
+            </if>
+        </where>
+    </select>
     <insert id="doSaveObject">
-        insert into role (name, note) values (#{name},#{note})
+        insert into role (name, note) values (#{entity.name},#{entity.note})
     </insert>
 </mapper>

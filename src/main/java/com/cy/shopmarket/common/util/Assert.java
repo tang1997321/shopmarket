@@ -1,20 +1,30 @@
 package com.cy.shopmarket.common.util;
-/**
- *	判定类
- */
-public class Assert {
-	public Assert() {}
+
+public abstract class Assert {
+//	private Assert() {
+//	}
 	
-	public static void isValid(boolean valid,String message) {
-		if(!valid)
+	public static void isNull(Object object, String message) {
+		if (object == null) {
 			throw new IllegalArgumentException(message);
+		}
 	}
-	public static void isNull(Object object,String message) {
-		if(object==null)
+	
+	public static void isEmpty(String object, String message) {
+		if (object == null || "".equals(object.trim())) {
 			throw new IllegalArgumentException(message);
+		}
 	}
-	public static void isEmpty(String string,String message) {
-		if(string==null||"".equals(string.trim()))
+	
+	public static void isEmpty(Integer[] ids, String message) {
+		if (ids == null || ids.length == 0) {
 			throw new IllegalArgumentException(message);
+		}
+	}
+	
+	public static void isValid(boolean valid, String message) {
+		if (!valid) {
+			throw new IllegalArgumentException(message);
+		}
 	}
 }

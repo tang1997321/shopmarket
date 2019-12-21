@@ -4,18 +4,8 @@
 <mapper namespace="com.cy.shopmarket.background.logmanager.dao.LogLogDao">
 
 	<insert id="insertLogAddObject">
-		insert into log
-		values(
-				null,
-				username=#{username},
-				operation=#{operation},
-				method=#{method},
-				param=#{param},
-				time=#{time},
-				ip=#{ip},
-				createtime=#{createtime},
-				operation_id=#{operationId}
-			)
+		insert into log (username, operation, method, param, time, ip, createtime, operation_id)
+		values(#{username},#{operation},#{method},#{param},#{time},#{ip},#{createtime},#{operationId})
 	</insert>
 
    <select id="findLogObject"

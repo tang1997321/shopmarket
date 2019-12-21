@@ -6,19 +6,21 @@
 <mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemMenuDao">
     <select id="doFindObjectById" resultType="com.cy.shopmarket.common.pojo.Menu">
         select * from menu
-        <where>
-            id=#{id}
-        </where>
+        <choose>
+            <when test="id!=null">
+                where id=#{id}
+            </when>
+        </choose>
     </select>
-    <insert id="doSaveObject">
-        insert into menu (name, parent_id, url, permissions) values (#{name}, #{parentId}, #{url}, #{permissions})
+    <insert id="doSaveObject" parameterType="com.cy.shopmarket.common.pojo.Menu">
+        insert into menu (name, parent_id, url, permissions) values (#{entity.name}, #{entity.parentId}, #{entity.url}, #{entity.permissions})
     </insert>
-    <update id="doUpdateObject">
-        update menu set name=#{name},parent_id=#{parentId},url=#{url},permissions=#{permissions}
+    <update id="doUpdateObject" parameterType="com.cy.shopmarket.common.pojo.Menu">
+        update menu set name=#{entity.name},parent_id=#{entity.parentId},url=#{entity.url},permissions=#{entity.permissions}
         <where>
             <choose>
-                <when test="id!=null">
-                    id =#{id}
+                <when test="entity.id!=null">
+                    id =#{entity.id}
                 </when>
                 <otherwise>
                     id =-1

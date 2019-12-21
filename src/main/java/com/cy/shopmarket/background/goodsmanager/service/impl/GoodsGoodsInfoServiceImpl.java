@@ -4,15 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.cy.shopmarket.common.pojo.GoodsCar;
-import com.cy.shopmarket.common.pojo.GoodsInfo;
 import com.cy.shopmarket.background.goodsmanager.dao.GoodsGoodsCarDao;
 import com.cy.shopmarket.background.goodsmanager.dao.GoodsGoodsInfoDao;
 import com.cy.shopmarket.background.goodsmanager.service.GoodsGoodsInfoService;
 import com.cy.shopmarket.common.annotation.AddLoggingAnnotation;
+import com.cy.shopmarket.common.config.PageProperties;
 import com.cy.shopmarket.common.exception.ServiceException;
+import com.cy.shopmarket.common.pojo.GoodsCar;
+import com.cy.shopmarket.common.pojo.GoodsInfo;
 import com.cy.shopmarket.common.util.Assert;
+import com.cy.shopmarket.common.vo.PageObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 /**
  *	商品业务层实现类
  */
@@ -24,9 +31,12 @@ public class GoodsGoodsInfoServiceImpl implements GoodsGoodsInfoService {
 
 	@Autowired
 	private GoodsGoodsCarDao goodsGoodsCarDao;
+	
+	@Autowired
+	private PageProperties pageProperties;
 
 	//改
-	@AddLoggingAnnotation(operation = "修改商品")
+	@AddLoggingAnnotation(operation = "修改商品",operationId = 2)
 	@Override
 	public int updateGoodsObject(GoodsInfo goodsInfo) {
 		//1.判定
@@ -48,7 +58,7 @@ public class GoodsGoodsInfoServiceImpl implements GoodsGoodsInfoService {
 	}
 	
 	//增
-	@AddLoggingAnnotation(operation = "添加商品")
+	@AddLoggingAnnotation(operation = "添加商品",operationId = 3)
 	@Override
 	public int insertGoodObject(GoodsInfo goodsInfo) {
 		//1.判定
@@ -69,7 +79,12 @@ public class GoodsGoodsInfoServiceImpl implements GoodsGoodsInfoService {
 	}
 
 	//删
-	@AddLoggingAnnotation(operation = "删除商品")
+	@Transactional(timeout = 20,
+            readOnly = false,
+            isolation = Isolation.READ_COMMITTED,
+            rollbackFor = Throwable.class,
+            propagation = Propagation.REQUIRED)
+	@AddLoggingAnnotation(operation = "删除商品",operationId = 4)
 	@Override
 	public int deleteGoodById(Integer id) {
 		//1.判定
@@ -86,8 +101,16 @@ public class GoodsGoodsInfoServiceImpl implements GoodsGoodsInfoService {
 	//查
 	@AddLoggingAnnotation(operation = "其它操作")
 	@Override
-	public List<GoodsInfo> findGoodsObjects() {
-//		int rows = goodsGoodsInfoDao.getRowCount();
-		return goodsGoodsInfoDao.findGoodsObjects();
-	}
+	public PageObject<GoodsInfo> findGoodsObjects(
+			String username, Integer pageCurrent){
+		//1.参数校验
+		Assert.isValid(pageCurrent!=null&&pageCurrent>=1, "页码值无效");
+		//2.设置查询起始位置
+		int pageSize=pageProperties.getPageSize();
+		Page<GoodsCar> page=
+		PageHelper.startPage(pageCurrent,pageSize);
+		//3.查询当前页日志记录
+		List<GoodsInfo> records=goodsGoodsInfoDao.findGoodsObjects(username);
+		return new PageObject<GoodsInfo>(records, (int)page.getTotal(), pageCurrent, pageSize);
+	} 
 }
