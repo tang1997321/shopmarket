@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemUserDao">
+    <!-- 通过select、insert、update、delete标签声明要执行的SQL -->
+    <resultMap id="userRoleVo" type="com.cy.shopmarket.background.systemmanager.vo.SystemUserRoleVo">
+        <id column="id" property="id"/>
+        <id column="username" property="username"/>
+        <id column="name" property="role"/>
+        <id column="phone" property="phone"/>
+        <id column="addr" property="addr"/>
+        <id column="money" property="money"/>
+        <id column="jpg" property="jpg"/>
+    </resultMap>
+    <select id="doFindObjects" resultMap="userRoleVo">
+        select u.id,r.name,u.username,u.phone,u.addr,u.money,u.jpg
+        from user u join user_role join role r
+        on u.id = user_id and user_role.role_id = r.id
+        <where>
+            <choose>
+                <when test="username!=null">
+                    username=#{username}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <delete id="doDeleteById">
+        delete from user
+        <where>
+            <choose>
+                <when test="id!=null">
+                    id=#{id}
+                </when>
+                <otherwise>
+                    id=-1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+    <insert id="doSaveObject">
+        insert into user (username, password, phone, salt, addr, money, jpg) values (#{username}, #{password}, #{phone}, #{salt}, #{addr}, #{money}, #{jpg})
+    </insert>
+    <select id="doFindById" resultMap="userRoleVo">
+        select r.name,u.username,u.phone,u.addr,u.money,u.jpg
+        from user u join user_role join role r
+        on u.id = user_id and user_role.role_id = r.id
+        <where>
+            <choose>
+                <when test="id!=null">
+                    u.id=#{id}
+                </when>
+                <otherwise>
+                    u.id=-1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+    <update id="doUpdateById">
+        update user set username=#{username},phone=#{phone},addr=#{addr},money=#{money},jpg=#{jpg}
+        <where>
+            <choose>
+                <when test="id!=null">
+                    id=#{id}
+                </when>
+                <otherwise>
+                    id=-1
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+</mapper>

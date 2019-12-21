@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.goodsmanager.dao.GoodsGoodsMenuDao">
+
+	<insert id="insertCarByUserIdGoodsId">
+		insert into goods_car
+		values(null,#{userId},#{goodsId},#{iscommit})
+	</insert>
+
+	<delete id="deleteCarByGoodId">
+		delete from goods_car
+		<where>
+			<choose>
+				<when test="id!=null">
+					id=#{id}
+				</when>
+				<otherwise>
+					id=-1
+				</otherwise>
+			</choose>
+		</where>
+		and iscommit=0
+	</delete>
+	
+</mapper>

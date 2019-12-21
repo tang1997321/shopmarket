@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemRoleMenuDao">
+    <!-- 通过select、insert、update、delete标签声明要执行的SQL -->
+    <delete id="doDeleteByMenuId">
+        delete from role_menu
+        <where>
+            <choose>
+                <when test="id!=null">
+                    menu_id=#{id}
+                </when>
+                <otherwise>
+                    menu_id=-1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+    <delete id="doDeleteByRoleId">
+        delete from role_menu
+        <where>
+            <choose>
+                <when test="id!=null">
+                    role_id=#{id}
+                </when>
+                <otherwise>
+                    role_id=-1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+</mapper>

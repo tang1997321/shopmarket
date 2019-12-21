@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemUserRoleDao">
+    <!-- 通过select、insert、update、delete标签声明要执行的SQL -->
+    <delete id="doDeleteByUserId">
+        delete from user_role
+        <where>
+            <choose>
+                <when test="id!=null">
+                    user_id=#{id}
+                </when>
+                <otherwise>user_id = -1</otherwise>
+            </choose>
+        </where>
+    </delete>
+    <insert id="insertObjects">
+        insert into user_role (user_id, role_id) values
+        <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">
+            #{userId},#{roleId}
+        </foreach>
+    </insert>
+    <delete id="doDeleteByRoleId">
+        delete from user_role
+        <where>
+            <choose>
+                <when test="id!=null">
+                    role_id=#{id}
+                </when>
+                <otherwise>role_id = -1</otherwise>
+            </choose>
+        </where>
+    </delete>
+</mapper>

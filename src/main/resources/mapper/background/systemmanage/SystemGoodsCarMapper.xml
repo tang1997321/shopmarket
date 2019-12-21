@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemGoodsCarDao">
+    <!-- 通过select、insert、update、delete标签声明要执行的SQL -->
+    <delete id="doDeleteObjectsByGoodIds">
+        delete from goods_car
+        <where>
+            <choose>
+                <when test="goodIds!=null and goodIds.size()>0">
+                    <foreach collection="goodIds" item="goodId" separator="or" open="(" close=")">
+                        goods_id=#{goodId}
+                    </foreach>
+                </when>
+                <otherwise>goods_id=-1</otherwise>
+            </choose>
+        </where>
+        and iscommit=0
+    </delete>
+    <delete id="doDeleteObjectsByUserId">
+        delete from goods_car
+        <where>
+            <choose>
+                <when test="id!=null">
+                    user_id=#{id}
+                </when>
+                <otherwise>
+                    user_id=-1
+                </otherwise>
+            </choose>
+        </where>
+        and iscommit=0
+    </delete>
+</mapper>

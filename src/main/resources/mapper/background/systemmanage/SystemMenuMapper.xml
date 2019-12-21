@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemMenuDao">
+    <select id="doFindObjectById" resultType="com.cy.shopmarket.common.pojo.Menu">
+        select * from menu
+        <where>
+            id=#{id}
+        </where>
+    </select>
+    <insert id="doSaveObject">
+        insert into menu (name, parent_id, url, permissions) values (#{name}, #{parentId}, #{url}, #{permissions})
+    </insert>
+    <update id="doUpdateObject">
+        update menu set name=#{name},parent_id=#{parentId},url=#{url},permissions=#{permissions}
+        <where>
+            <choose>
+                <when test="id!=null">
+                    id =#{id}
+                </when>
+                <otherwise>
+                    id =-1
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <delete id="doDeleteObjectById">
+        delete from menu
+        <where>
+            <choose>
+                <when test="id!=null">
+                    id=#{id}
+                </when>
+                <otherwise>
+                    id=-1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+</mapper>

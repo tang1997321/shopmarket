@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.goodsmanager.dao.GoodsGoodsCarDao">
+
+	<update id="updateTypeOjbect">
+		update goods_type
+		set 
+		name=#{name},
+		parent_id=#{parentId}
+		where id=#{id}
+	</update>
+	
+	<insert id="insertTypeObject">
+		insert into goods_type
+		values(null,#{name},#{parentId})
+	</insert>
+
+	<delete id="deleteTypeById">
+		delete from goods_type
+		<where>
+			<choose>
+				<when test="id!=null">
+					id=#{id}
+				</when>
+				<otherwise>
+					id=-1
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+</mapper>

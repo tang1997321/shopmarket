@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemRoleDao">
+    <select id="doFindObjectById" resultType="com.cy.shopmarket.common.pojo.Role">
+        select * from role
+        <where>
+            id=#{id}
+        </where>
+    </select>
+    <delete id="doDeleteById">
+        delete from role
+        <where>
+            <choose>
+                <when test="id!=null">
+                    id=#{id}
+                </when>
+                <otherwise>
+                    id = -1
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+    <update id="doUpdateById">
+        update role set name=#{name},note=#{note}
+        <where>
+            <choose>
+                <when test="id!=null">
+                    id=#{id}
+                </when>
+                <otherwise>
+                    id = -1
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+    <insert id="doSaveObject">
+        insert into role (name, note) values (#{name},#{note})
+    </insert>
+</mapper>

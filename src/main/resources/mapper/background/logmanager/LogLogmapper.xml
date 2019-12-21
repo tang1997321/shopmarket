@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.shopmarket.background.logmanager.dao.LogLogDao">
+
+	<insert id="insertLogAddObject">
+		insert into log
+		values(
+				null,
+				username=#{username},
+				operation=#{operation},
+				method=#{method},
+				param=#{param},
+				time=#{time},
+				ip=#{ip},
+				createtime=#{createtime},
+				operation_id=#{operationId}
+			)
+	</insert>
+
+   <select id="findLogObject"
+            resultType="com.cy.shopmarket.common.pojo.Log">
+         select * from log
+         <where>
+         <choose>
+         <when test="operation_id!=null">
+         operation_id=#{operationId}
+         </when>
+         <otherwise>
+         operation_id=-1
+         </otherwise>
+         </choose>
+         </where>
+    </select>
+    <delete id="deleteObjects">
+        delete from log
+        <where>
+         <choose>
+          <when test="ids!=null and ids.length>0">
+           <foreach collection="ids"
+                 separator="or"
+                 item="id">
+             id=#{id}
+           </foreach>
+          </when>
+         <otherwise>
+           id=-1
+         </otherwise>
+        </choose>
+       </where>
+     </delete>
+
+  
+</mapper>

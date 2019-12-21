@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.systemmanager.dao.SystemGoodsInfoDao">
+    <!-- 通过select、insert、update、delete标签声明要执行的SQL -->
+    <select id="doFindObjectsByUserId" resultType="int">
+        select id from goods_info
+        <where>
+            <choose>
+                <when test="userId!=null">
+                    user_id=#{userId}
+                </when>
+                <otherwise>
+                    user_id=-1
+                </otherwise>
+            </choose>
+        </where>
+        and is_exist=1
+    </select>
+
+    <update id="doDeleteByUserId">
+        update goods_info set is_exist = 0
+        <where>
+            <choose>
+                <when test="id!=null">
+                    user_id=#{id}
+                </when>
+                <otherwise>
+                    user_id=-1
+                </otherwise>
+            </choose>
+        </where>
+        and is_exist=1
+    </update>
+</mapper>

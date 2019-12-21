@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.shopmarket.background.goodsmanager.dao.GoodsGoodsInfoDao">
+	
+	<update id="updateGoodsObject">
+		update goods_info
+		set name=#{name},
+		type_id=#{typeId},
+		jpg=#{jpg},
+		price=#{price},
+		is_hot=#{isHot},
+		user_id=#{userId},
+		createdtime=now(),
+		where id=#{id}
+	</update>
+	
+	<insert id="insertGoodObject"
+			parameterType="com.cy.shopmarket.common.pojo.GoodsInfo"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		insert into goods_info
+		values(
+		null,#{name},#{type_id},#{jpg},#{price},#{isHot},#{userId},#{createdTime},#{isExist})
+	</insert>
+	
+	<delete id="deleteGoodById">
+		update goods_info
+		set is_exist=0
+		<where>
+			<choose>
+				<when test="id!=null">
+					id=#{id}
+				</when>
+				<otherwise>
+					id=-1
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	
+</mapper>
